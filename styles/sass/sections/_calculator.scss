@@ -1,0 +1,165 @@
+
+.calculator {
+  .wrapper {
+    max-width: 65rem;
+    width: 100vw;
+    height: 100vh;
+    padding: var(--space-4);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .output {
+    margin-top: auto;
+  }
+
+  h2 {
+    margin-top: var(--space-8);
+    font-size: var(--font-size-lg);
+    text-align: center;
+  }
+
+  .output,
+  .operation,
+  .result,
+  .input {
+    width: 100%;
+  }
+
+  .output {
+    margin-bottom: var(--space-6);
+  }
+
+  .value {
+    text-align: right;
+    overflow: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+  .operation .value {
+    width: 100%;
+    height: 2rem;
+
+    font-size: var(--font-size-2xl);
+    letter-spacing: 1px;
+    color: var(--colors-gray-200);
+
+    span {
+      vertical-align: text-top;
+      font-size: var(--font-size-sm);
+      justify-self: flex-start;
+    }
+  }
+
+  .result .value {
+    font-size: var(--font-size-8xl);
+  }
+
+  .input {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-1);
+
+    button {
+      padding: var(--space-4) var(--space-6);
+      background: transparent;
+      font-weight: var(--font-weight-regular);
+      border-radius: var(--radii-sm);
+      transition: background 0.3s;
+
+      background: rgba(9, 19, 34, 0.4);
+      backdrop-filter: blur(15px);
+
+      span {
+        font-size: var(--font-size-xxs);
+        align-self: flex-start;
+      }
+
+      &:hover {
+        background: rgba(12, 26, 46, 0.8);
+        backdrop-filter: blur(0);
+      }
+    }
+  }
+
+  #clear,
+  #percent,
+  #delete,
+  #division,
+  #multiplication,
+  #subtraction,
+  #addition {
+    color: var(--colors-calculator-mid);
+    font-weight: var(--font-weight-medium);
+  }
+
+  #rad,
+  #deg,
+  #sin,
+  #cos,
+  #tan,
+  #power,
+  #log,
+  #ln,
+  #open-parenthesis,
+  #close-parenthesis,
+  #square-root,
+  #factorial,
+  #square,
+  #pi,
+  #e,
+  #acos,
+  #asin,
+  #atan,
+  #ANS,
+  #exp {
+    color: var(--colors-gray-100);
+  }
+
+  #rad,
+  #deg {
+    background: rgba(12, 26, 46, 0.8);
+    &.active-angle {
+      color: var(--colors-calculator-mid);
+      font-weight: var(--font-weight-bold);
+    }
+  }
+
+  #calculate {
+    position: relative;
+    z-index: 1;
+
+    &::before {
+      content: "";
+      width: var(--space-8);
+      height: var(--space-8);
+      background: var(--colors-calculator-mid);
+      border-radius: var(--radii-full);
+
+      transition: width 0.15s, height 0.15s;
+      position: absolute;
+      z-index: -1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:hover {
+      // background: var(--colors-calculator-mid);
+      background: transparent;
+
+      &::before {
+        width: 100%;
+        height: 100%;
+        border-radius: var(--radii-sm);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .calculator .input button {
+    padding: var(--space-4) 0;
+  }
+}
