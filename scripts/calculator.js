@@ -120,7 +120,7 @@ const calculatorButtons = [
   },
   {
     name: "delete",
-    symbol: "DEL",
+    symbol: "⌫",
     formula: false,
     type: "key",
   },
@@ -272,6 +272,7 @@ inputElement.addEventListener("click", (event) => {
   calculatorButtons.forEach((button) => {
     if (button.name == targetButton.id) calculator(button);
     updateOutputOperation(data.operation.join(""));
+    updateParenthesesCount();
   });
 });
 
@@ -289,6 +290,7 @@ document.addEventListener("keydown", (event) => {
     if (button.name == "delete" && key == "backspace") deleteLatestOperation();
 
     updateOutputOperation(data.operation.join(""));
+    updateParenthesesCount();
   });
 });
 
@@ -346,6 +348,7 @@ const calculator = (button) => {
       data.formula.splice(0, data.formula.length);
 
       updateOutputResult(0);
+      updateParenthesesCount();
     } else if (button.name == "delete") {
       deleteLatestOperation();
     } else if (button.name == "rad") {
@@ -371,6 +374,8 @@ const calculator = (button) => {
 const deleteLatestOperation = () => {
   data.operation.pop();
   data.formula.pop();
+
+  updateParenthesesCount();
 };
 
 const calculateResult = () => {
@@ -424,6 +429,22 @@ const calculateResult = () => {
   data.operation = [result];
   data.formula = [result];
   updateOutputResult(result);
+  updateParenthesesCount();
+};
+
+const updateParenthesesCount = () => {
+  const operationString = data.operation.join("");
+  const openCount = (operationString.match(/\(/g) || []).length;
+  const closeCount = (operationString.match(/\)/g) || []).length;
+  const remaining = openCount - closeCount;
+
+  const openParenthesisButton = document.getElementById("open-parenthesis");
+
+  if (remaining > 0) {
+    openParenthesisButton.setAttribute("data-count", remaining);
+  } else {
+    openParenthesisButton.removeAttribute("data-count");
+  }
 };
 
 const powerBaseGetter = (formula, POWERSEARCHRESULT) => {
